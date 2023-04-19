@@ -14,11 +14,17 @@ const initialState = {
 const StateCtx = createContext<any>(null);
 
 export const ContextProvider = ({ children }: ContextProps) => {
+  const localMode = localStorage.getItem('themeMode')
+    ? localStorage.getItem('themeMode')
+    : 'Light';
+  const localColor = localStorage.getItem('colorMode')
+    ? localStorage.getItem('colorMode')
+    : '#03C9D7';
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
   const [screenSize, setScreenSize] = useState(undefined);
-  const [currentColor, setCurrentColor] = useState('#03C9D7');
-  const [currentMode, setCurrentMode] = useState('Light');
+  const [currentColor, setCurrentColor] = useState(localColor);
+  const [currentMode, setCurrentMode] = useState(localMode);
   const [themeSettings, setThemeSettings] = useState(false);
 
   const setMode = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +39,11 @@ export const ContextProvider = ({ children }: ContextProps) => {
   };
 
   const handleClick = (clicked: string) => {
-    setIsClicked({ ...initialState, [clicked]: true });
+    if (Object.values(isClicked).every((item) => item === false)) {
+      setIsClicked({ ...initialState, [clicked]: true });
+    } else {
+      setIsClicked(initialState);
+    }
   };
   return (
     <StateCtx.Provider

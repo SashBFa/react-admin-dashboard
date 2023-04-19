@@ -5,7 +5,7 @@ import { chatData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 
 export const Chat = () => {
-  const { currentColor } = useStateContext();
+  const { currentColor, handleClick } = useStateContext();
   return (
     <div className="nav-item absolute right-5 md:right-52 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
       <div className="flex justify-between items-center">
@@ -18,13 +18,13 @@ export const Chat = () => {
             5 New
           </button>
         </div>
-        <Button
-          icon={<MdOutlineCancel />}
-          color="rgb(153, 171, 180)"
-          bgHoverColor="light-gray"
-          size="2xl"
-          borderRadius="50%"
-        />
+        <button
+          className="text-2xl rounded-full hover:bg-light-gray p-3"
+          style={{ color: 'rgb(153, 171, 180)' }}
+          onClick={() => handleClick('chat')}
+        >
+          <MdOutlineCancel />
+        </button>
       </div>
       <div className="mt-5 ">
         {chatData?.map((item, index) => (
